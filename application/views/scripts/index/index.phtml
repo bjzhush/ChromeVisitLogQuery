@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+        <script type="text/javascript" src='/js/jquery.js'> </script>
+        <script type="text/javascript" src='/js/jquery-ui.js'> </script>
+        <script type="text/javascript" src='/js/jquery-ui-timepicker.js'> </script>
+        <script type="text/javascript" src='/js/bootstrap.min.js'> </script>
+
+        <script>
+        $(function() {
+            $( "#startdatepicker" ).datetimepicker();
+            $( "#enddatepicker" ).datetimepicker();
+        });
+        </script>
+
+        <link href="/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="/css/jquery-ui.css" media="screen" rel="stylesheet" type="text/css">
+        <style type="text/css"> 
+            /* css for timepicker */
+            .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+            .ui-timepicker-div dl { text-align: left; }
+            .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+            .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+            .ui-timepicker-div td { font-size: 90%; }
+            .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+            .ui-timepicker-rtl{ direction: rtl; }
+            .ui-timepicker-rtl dl { text-align: right; }
+            .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+        </style> 
+    </head>
+    <body>
+<form action="" method = "post">
+<div align="center">
+<p>Start at: <input type="text" name ='start' id="startdatepicker" /></p>
+<p>End   at: <input type="text" name ='end' id="enddatepicker" /></p>
+    Keyword:
+
+<input type="text" name="key" class="input-xxlarge">
+<input type="submit" name="sub" value = "搜">
+
+</form>
+</div>
+<?php
+if ($this->resultCount) {
+    echo "Total num is: ".$this->resultCount."<br>";
+}
+if ($this->key) {
+    echo "Key: ".$this->key."<br>";
+}
+if ($this->timeStart) {
+    echo "Start: ".$this->timeStart."<br>";
+    echo "End: ".$this->timeEnd."<br>";
+}
+
+?>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <table class="table table-nonfluid">
+                <thead>
+                    <tr>
+                        <th> Id </th>
+                        <th> Url </th>
+                        <th> Time </th>
+                        <th> Ip </th>
+                        <th> Title </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if($this->hList) {
+                        foreach ($this->hList as $history) {
+                            if (count($history['url'] > 40)) {
+                                $history['shortUrl'] = substr($history['url'], 0, 40). '...';
+                            } else {
+                                $history['shortUrl'] = $history['url'];
+                            }
+                            $row = sprintf('<tr><td>%s</td> <td> <a target = "_blank" href ="%s" title = "%s">%s</a> </td> <td>%s</td> <td>%s</td> <td>%s</td></tr>', $history['id'], $history['url'], $history['url'],  $history['shortUrl'], $history['time'], $history['ip'], $history['title']);
+                            echo $row;
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </body>
+</html>
