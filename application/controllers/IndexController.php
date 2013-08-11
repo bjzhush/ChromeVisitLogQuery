@@ -7,6 +7,9 @@ class IndexController extends Boot_ControllerBase
 
         $post = $this->getPost();
         if (count($post)) {
+            if ($this->getRequest()->getCookie('user') != 'bjzhush') {
+                exit("Auth required");
+            }
             $table = Boot_Registry::getTable('Chromeurllog');
             $select = $table->select();
 
