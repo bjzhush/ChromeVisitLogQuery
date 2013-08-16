@@ -4,6 +4,7 @@ class IndexController extends Boot_ControllerBase
 
     public function indexAction()
     {
+        date_default_timezone_set('Asia/Chongqing');
 
         $post = $this->getPost();
         if (count($post)) {
@@ -29,7 +30,7 @@ class IndexController extends Boot_ControllerBase
             $this->view->hList     = $historyList;
             $this->view->key       = $post['key'];
             $this->view->resultCount = count($historyList);
-            if ($this->timeStart) {
+            if (isset($this->timeStart)) {
                 $this->view->timeStart = $timeStart;
                 $this->view->timeEnd   = $timeEnd;
             }
